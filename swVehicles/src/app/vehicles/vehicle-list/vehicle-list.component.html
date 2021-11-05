@@ -1,0 +1,33 @@
+<div class="card">
+  <div class="card-header">
+    {{pageTitle}}
+  </div>
+
+  <div class='card-body'
+       *ngIf="vm$ | async as vm">
+
+    <select class="form-select"
+            aria-label="Vehicle classification list"
+            style="margin-bottom: 10px;"
+            (change)="onVehicleClassSelected($any($event.target).value)">
+      <option value="0">- Display All -</option>
+      <option *ngFor="let vehicleClass of vm.vehicleClasses"
+              [value]="vehicleClass.name">{{ vehicleClass.name }}</option>
+    </select>
+
+    <div class="list-group">
+      <button type="button"
+              class="list-group-item"
+              *ngFor="let vehicle of vm.vehicles"
+              [ngClass]="{'active': vehicle?.name === vm.selectedVehicle?.name}"
+              (click)="onSelected(vehicle.name)">
+        {{ vehicle.name }}
+      </button>
+    </div>
+  </div>
+
+  <div class="alert alert-danger"
+       *ngIf="errorMessage$ | async as errorMessage">
+    {{errorMessage }}
+  </div>
+</div>
