@@ -25,8 +25,9 @@ import { Film, Vehicle, VehicleResponse } from './vehicle';
 export class VehicleService {
   private url = 'https://swapi.py4e.com/api/vehicles';
 
-  private vehicleSubject = new BehaviorSubject<string>('');
-  vehicleSelected$ = this.vehicleSubject.asObservable();
+  // Action stream
+  private vehicleSelectedSubject = new BehaviorSubject<string>('');
+  vehicleSelected$ = this.vehicleSelectedSubject.asObservable();
 
   // Action stream
   private vehicleClassSubject = new BehaviorSubject<string>('');
@@ -51,8 +52,8 @@ export class VehicleService {
   ])
     .pipe(
       map(([vehicles, selectedVehicleClass]) =>
-        vehicles.filter(product =>
-          selectedVehicleClass ? product.vehicle_class.toLocaleLowerCase().includes(selectedVehicleClass.toLocaleLowerCase()) : true
+        vehicles.filter(v =>
+          selectedVehicleClass ? v.vehicle_class.toLocaleLowerCase().includes(selectedVehicleClass.toLocaleLowerCase()) : true
         )),
       catchError(this.handleError)
     );
@@ -91,12 +92,12 @@ export class VehicleService {
   constructor(private http: HttpClient) { }
 
   vehicleSelected(vehicleName: string) {
-    this.vehicleSubject.next(vehicleName);
+    this.vehicleSelectedSubject.next(vehicleName);
   }
 
   // When a vehicle classification is selected,
   // emit the selected vehicle class
-  vehicleClassSelected(vehicleClass: any): void {
+  vehicleClassSelected(vehicleClass: string): void {
     this.vehicleClassSubject.next(vehicleClass);
   }
 

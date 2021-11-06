@@ -40,7 +40,7 @@ export class CartService {
     this.tax$,
   ]).pipe(map(([st, d, t]) => st + d + t));
 
-  // Add the vehicle to the cart as a CartItem
+  // Add the vehicle to the cart as an Action<CartItem>
   addToCart(vehicle: Vehicle): void {
     this.itemSubject.next({
       item: { vehicle, quantity: 1 },
