@@ -10,7 +10,7 @@
             aria-label="Vehicle classification list"
             style="margin-bottom: 10px;"
             (change)="onVehicleClassSelected($any($event.target).value)">
-      <option value="0">- Display All -</option>
+      <option value="">- Display All -</option>
       <option *ngFor="let vehicleClass of vm.vehicleClasses"
               [value]="vehicleClass.name">{{ vehicleClass.name }}</option>
     </select>
