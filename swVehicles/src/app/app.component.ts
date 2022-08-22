@@ -3,7 +3,7 @@ import { map } from 'rxjs';
 import { CartService } from './cart/cart.service';
 
 @Component({
-  selector: 'sw-root',
+  selector: 'swv-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })

@@ -31,13 +31,12 @@ export class VehicleService {
 
   // Action stream
   private vehicleClassSubject = new BehaviorSubject<string>('');
-  vehicleClassAction$ = this.vehicleClassSubject.asObservable();
+  vehicleClassSelected$ = this.vehicleClassSubject.asObservable();
 
   // All pages of vehicles
   allVehicles$ = this.http.get<VehicleResponse>(this.url).pipe(
     expand(data => data.next ? this.http.get<VehicleResponse>(data.next) : EMPTY),
-    reduce((acc, data) => acc.concat(data.results), [] as Vehicle[]),
-    // tap(data => console.log(data))
+    reduce((acc, data) => acc.concat(data.results), [] as Vehicle[])
   );
 
   // Vehicles filtered by the selected classification
@@ -45,7 +44,7 @@ export class VehicleService {
   // Rather, the code gets all vehicles, and filters by the class.
   vehicles$ = combineLatest([
     this.allVehicles$,
-    this.vehicleClassAction$.pipe(
+    this.vehicleClassSelected$.pipe(
       // When the classification changes, clear the selected vehicle
       tap(() => this.vehicleSelected(''))
     )
@@ -60,7 +59,6 @@ export class VehicleService {
 
   // First page of vehicles
   firstPageVehicles$ = this.http.get<VehicleResponse>(this.url).pipe(
-    tap(data => console.log(data)),
     map(data => data.results),
     catchError(this.handleError)
   );

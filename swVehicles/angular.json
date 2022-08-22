@@ -1,21 +1,14 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "cli": {
-    "analytics": "ecb30188-334e-4cb5-9e5f-3ce97e3e6164"
-  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "swVehicles": {
       "projectType": "application",
-      "schematics": {
-        "@schematics/angular:application": {
-          "strict": true
-        }
-      },
+      "schematics": {},
       "root": "",
       "sourceRoot": "src",
-      "prefix": "sw",
+      "prefix": "swv",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -105,5 +98,7 @@
       }
     }
   },
-  "defaultProject": "swVehicles"
+  "cli": {
+    "analytics": "d5e47651-6bfa-4dd7-8a38-bc965400b5df"
+  }
 }
