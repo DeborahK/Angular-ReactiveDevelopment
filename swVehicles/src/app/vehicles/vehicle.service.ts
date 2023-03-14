@@ -72,7 +72,7 @@ export class VehicleService {
           // (We can't modify the backend in this demo)
           map(v => ({
             ...v,
-            cost_in_credits: isNaN(Number(v.cost_in_credits)) ? String(Math.random()*100000) : v.cost_in_credits
+            cost_in_credits: isNaN(Number(v.cost_in_credits)) ? String(Math.random() * 100000) : v.cost_in_credits
           }) as Vehicle),
           catchError(this.handleError)
         ) : of(null)
@@ -113,6 +113,6 @@ export class VehicleService {
         }`;
     }
     console.error(errorMessage);
-    return throwError(() => new Error(errorMessage));
+    return throwError(() => errorMessage);
   }
 }

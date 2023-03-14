@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { map } from 'rxjs';
+
 import { CartService } from './cart/cart.service';
 
 @Component({
-  selector: 'swv-root',
+  selector: 'sw-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })

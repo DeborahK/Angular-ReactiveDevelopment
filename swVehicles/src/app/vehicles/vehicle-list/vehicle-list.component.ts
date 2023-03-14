@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
+import { NgFor, NgClass, NgIf, AsyncPipe } from '@angular/common';
 import { combineLatest, EMPTY, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { VehicleClassService } from '../vehicle-classes/vehicle-class.service';
@@ -6,8 +7,9 @@ import { VehicleService } from '../vehicle.service';
 
 @Component({
   selector: 'sw-vehicle-list',
-  templateUrl: './vehicle-list.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  standalone: true,
+  imports: [AsyncPipe, NgClass, NgFor, NgIf],
+  templateUrl: './vehicle-list.component.html'
 })
 export class VehicleListComponent {
   pageTitle = 'Vehicles';
@@ -53,8 +55,7 @@ export class VehicleListComponent {
     }))
   );
 
-  constructor(private vehicleService: VehicleService,
-    private vehicleClassService: VehicleClassService) { }
+  constructor(private vehicleService: VehicleService, private vehicleClassService: VehicleClassService) { }
 
   // When a vehicle is selected, emit the selected vehicle name
   onSelected(vehicleName: string): void {
@@ -66,4 +67,5 @@ export class VehicleListComponent {
   onVehicleClassSelected(vehicleClass: string): void {
     this.vehicleService.vehicleClassSelected(vehicleClass);
   }
+
 }

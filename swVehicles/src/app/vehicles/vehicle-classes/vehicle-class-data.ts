@@ -18,6 +18,9 @@ export class VehicleClassData {
       name: 'airspeeder'
     },
     {
+      name: 'speeder'
+    },
+    {
       name: 'bomber'
     },
     {

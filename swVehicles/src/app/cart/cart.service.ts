@@ -14,7 +14,8 @@ export class CartService {
 
   cartItems$ = this.itemAction$
     .pipe(
-      scan((items, itemAction) => this.modifyCart(items, itemAction), [] as CartItem[]),
+      scan((items, itemAction) =>
+        this.modifyCart(items, itemAction), [] as CartItem[]),
       shareReplay(1)
     );
 

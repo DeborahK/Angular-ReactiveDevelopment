@@ -1,10 +1,15 @@
 import { Component, Input } from '@angular/core';
+import { AsyncPipe, DecimalPipe, NgFor, NgIf } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
 import { BehaviorSubject, map, tap } from 'rxjs';
 import { CartItem } from '../cart';
 import { CartService } from '../cart.service';
 
 @Component({
   selector: 'sw-cart-item',
+  standalone: true,
+  imports: [AsyncPipe, DecimalPipe, FormsModule, NgFor, NgIf],
   templateUrl: './cart-item.component.html'
 })
 export class CartItemComponent {
