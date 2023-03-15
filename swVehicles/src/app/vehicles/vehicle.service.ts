@@ -9,6 +9,7 @@ import {
   filter,
   forkJoin,
   map,
+  mergeMap,
   Observable,
   of,
   reduce,
@@ -37,6 +38,20 @@ export class VehicleService {
   allVehicles$ = this.http.get<VehicleResponse>(this.url).pipe(
     expand(data => data.next ? this.http.get<VehicleResponse>(data.next) : EMPTY),
     reduce((acc, data) => acc.concat(data.results), [] as Vehicle[])
+  );
+
+  // One page of vehicles with their films
+  // Not currently used in the app
+  // To try it out, subscribe in the constructor below.
+  vehiclesWithFilms$ = this.http.get<VehicleResponse>(this.url).pipe(
+    map(data => data.results as Vehicle[]),
+    mergeMap(vehicles => forkJoin(vehicles.map(vehicle => 
+      forkJoin(vehicle.films.map(film => this.http.get<Film>(film).pipe(
+        map(f => f.title),
+      ))).pipe(
+        map(films => ({ ...vehicle, films } as Vehicle))
+      ),
+    )))
   );
 
   // Vehicles filtered by the selected classification
@@ -83,11 +98,13 @@ export class VehicleService {
   vehicleFilms$ = this.selectedVehicle$.pipe(
     filter(Boolean),
     switchMap(vehicle =>
-      forkJoin(vehicle.films.map(link => this.http.get<Film>(link)))
+      forkJoin(vehicle.films.map(link => 
+        this.http.get<Film>(link)))
     )
   );
-
-  constructor(private http: HttpClient) { }
+ 
+  constructor(private http: HttpClient) { 
+  }
 
   vehicleSelected(vehicleName: string) {
     this.vehicleSelectedSubject.next(vehicleName);

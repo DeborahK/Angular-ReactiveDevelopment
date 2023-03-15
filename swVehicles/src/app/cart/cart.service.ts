@@ -24,7 +24,7 @@ export class CartService {
     map(items => items.reduce((a, b) => a + (b.quantity * Number(b.vehicle.cost_in_credits)), 0)),
   );
 
-  // Delivery is free if spending more than 200,000 credits
+  // Delivery is free if spending more than 100,000 credits
   deliveryFee$ = this.subTotal$.pipe(
     map((t) => (t < 100000 ? 999 : 0))
   );
