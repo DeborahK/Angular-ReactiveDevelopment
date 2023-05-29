@@ -55,7 +55,7 @@ export class VehicleListComponent {
     }))
   );
 
-  constructor(private vehicleService: VehicleService, private vehicleClassService: VehicleClassService) { }
+  constructor(public vehicleService: VehicleService, private vehicleClassService: VehicleClassService) { }
 
   // When a vehicle is selected, emit the selected vehicle name
   onSelected(vehicleName: string): void {
